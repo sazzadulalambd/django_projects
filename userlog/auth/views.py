@@ -68,23 +68,23 @@ def signup(request):
         #***************************************************************************************************************************************************************
         
         # # Email Address Confirmation Email
-        current_site = get_current_site(request)
-        email_subject = "Confirm your Email Django App Login!!"
-        message2 = render_to_string('email_confirmation.html',{
+        # current_site = get_current_site(request)
+        # email_subject = "Confirm your Email Django App Login!!"
+        # message2 = render_to_string('email_confirmation.html',{
             
-            'name': myuser.first_name,
-            'domain': current_site.domain,
-            'uid': urlsafe_base64_encode(force_bytes(myuser.pk)),
-            'token': generate_token.make_token(myuser)
-        })
-        email = EmailMessage(
-        email_subject,
-        message2,
-        settings.EMAIL_HOST_USER,
-        [myuser.email],
-        )
-        email.fail_silently = True
-        email.send()
+        #     'name': myuser.first_name,
+        #     'domain': current_site.domain,
+        #     'uid': urlsafe_base64_encode(force_bytes(myuser.pk)),
+        #     'token': generate_token.make_token(myuser)
+        # })
+        # email = EmailMessage(
+        # email_subject,
+        # message2,
+        # settings.EMAIL_HOST_USER,
+        # [myuser.email],
+        # )
+        # email.fail_silently = True
+        # email.send()
         
         return redirect('signin')
 
