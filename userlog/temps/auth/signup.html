@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SUAS</title>
+</head>
+<body>
+    <h3>Sign UP</h3>
+    <form action="/signup" method="POST">
+        {% csrf_token %}
+
+        <label for=""> User Name</label>
+        <input type="text" id="u_name" name="u_name" placeholder=" Enter a valid User Name" Required>
+        <br>
+
+        <label for=""> First Name</label>
+        <input type="text" id="f_name" name="f_name" placeholder=" Enter First Name" Required>
+        <br>
+
+        <label for=""> last Name</label>
+        <input type="text" id="l_name" name="l_name" placeholder=" Enter last Name" Required>
+        <br>
+
+        <label for=""> Email Address</label>
+        <input type="email" id="email" name="email" placeholder=" Enter a valid Email Address"Required>
+        <br>
+
+        <label for=""> Password</label>
+        <input type="password" id="password" name="password" placeholder=" Create Password" Required>
+        <br>
+
+        <label for=""> Confirm Password</label>
+        <input type="password" id="c_password" name="c_password" placeholder=" Confirm Password" Required>
+        <br>
+
+        <button type="submit"> Sign Up</button>
+        <br>
+        {% for message in messages %}
+         <span>{{ message }}</span>
+            {% endfor %}
+
+
+    </form>
+</body>
+</html>

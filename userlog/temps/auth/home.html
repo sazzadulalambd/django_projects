@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SUAS</title>
+</head>
+<body>
+    
+    {% for message in messages %}
+         <span>{{ message }}</span>
+            {% endfor %}
+
+    <!-- {%for message in messages%}
+        <div class="alert alert-{{message.tags}}alert-disimissible fade show"role="alert">
+        <strong>Message:</strong>{{message}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        {% endfor %} -->
+
+    <h3>Welcome!</h3>
+        {%if user.is_authenticated%}
+        <h3>hello {{ first_name }} </h3>       
+        <button type="submit"><a href="/signout">signout</a></button>
+        {% else %}
+        <button type="submit"><a href="/signup">SignUp</a></button>
+        <button type="submit"><a href="/signin">SignIn</a></button>
+        {% endif%}
+    
+</body>
+</html>
