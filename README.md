@@ -21,7 +21,7 @@ python manage.py startapp myapp
 ```
 
 5. Open the myapp/models.py file and define a model that represents the data you want to store in your database:
- ``` 
+``` 
  from django.db import models
 class MyModel(models.Model):
     name = models.CharField(max_length=50)
@@ -30,15 +30,17 @@ class MyModel(models.Model):
 
     def __str__(self):
         return self.name
-        ```
+```
         
 6. Run the following command in your terminal to create the database table for your model:
+
 ```
 python manage.py makemigrations myapp
 python manage.py migrate
 ```
 
 7. Open the myapp/forms.py file and define a form that corresponds to your model:
+
 ```
 from django import forms
 from .models import MyModel
@@ -50,6 +52,7 @@ class MyModelForm(forms.ModelForm):
 ```
 
 8. Open the myapp/urls.py file
+
 ```
 from django.contrib import admin
 from django.urls import path,include
@@ -64,7 +67,9 @@ urlpatterns = [
     
 ]
 ```
+
 9. Open the myapp/views.py file and define the views for your CRUD functionality:
+
 ```
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import MyModel
@@ -105,6 +110,7 @@ def delete(request, pk):
 ```
 
 10. Create the HTML templates for your views. For example, create create.html:
+
 ```
 {% extends 'base.html' %}
 
@@ -132,8 +138,9 @@ Inside the form, we're using the Django template tag csrf_token to add a securit
 To display the form fields, we're using the {{ form.as_p }} template tag, which will render the form fields as paragraphs (<p>) with labels and input fields. You could also use {{ form.as_table }} to render the fields in a table, or {{ form.as_ul }} to render them as an unordered list.
  
 
-list.html:
-```
+**list.html:**
+
+ ```
 {% extends 'base.html' %}
 
 {% block content %}
@@ -142,7 +149,8 @@ list.html:
 
 <ul>
  ``
-base.html
+ 
+**base.html**
  
  ```
  <!DOCTYPE html>
