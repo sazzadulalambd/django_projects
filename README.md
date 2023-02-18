@@ -140,7 +140,7 @@ To display the form fields, we're using the {{ form.as_p }} template tag, which 
 
 **list.html:**
 
- ```
+```
 {% extends 'base.html' %}
 
 {% block content %}
@@ -148,7 +148,7 @@ To display the form fields, we're using the {{ form.as_p }} template tag, which 
 <h1>My models</h1>
 
 <ul>
- ``
+ ```
  
 **base.html**
  
@@ -177,4 +177,5 @@ To display the form fields, we're using the {{ form.as_p }} template tag, which 
   </footer>
 </body>
 </html>
+ 
 ```
