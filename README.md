@@ -59,11 +59,11 @@ from django.urls import path,include
 from . import views
 
 urlpatterns = [
-    path('', views.index, name="index"),
-    path('signup', views.signup, name="signup"),
-    # path('activate/<uidb64>/<token>', views.activate, name='activate'),
-    path('signin', views.signin, name="signin"),
-    path('signout', views.signout, name="signout"),
+    path('', views.home, name="home"),
+    path('create', views.create, name="create"),
+    path('list', views.list, name="list"),
+    path('update', views.update, name="update"),
+    path('delete', views.delete, name="delete"),
     
 ]
 ```
@@ -165,7 +165,7 @@ To display the form fields, we're using the ```{{ form.as_p }}``` template tag, 
     <nav>
       <ul>
         <li><a href="{% url 'home' %}">Home</a></li>
-        <li><a href="{% url 'create_person' %}">Add Person</a></li>
+        <li><a href="{% url 'create' %}">Add Person</a></li>
       </ul>
     </nav>
   </header>
