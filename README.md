@@ -109,7 +109,7 @@ def delete(request, pk):
     return redirect('list')
 ```
 
-10. Create the HTML templates for your views. For example, create create.html:
+10. Create the HTML templates for your views. For example, create **create.html:**
 
 ```
 {% extends 'base.html' %}
