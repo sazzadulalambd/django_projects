@@ -129,13 +129,13 @@ def delete(request, pk):
 {% endblock %}
 ```
  
- In this example, we're extending a base template called 'base.html', which could include common elements like a header, footer, or navigation menu. The content block is where we'll put the form for creating a new person.
+In this example, we're extending a base template called ```'base.html'```, which could include common elements like a header, footer, or navigation menu. The ```content``` block is where we'll put the form for creating a new person.
 
-We've created an HTML form that uses the POST method to submit the form data to the server. We've also included the enctype="multipart/form-data" attribute, which is required when the form includes file uploads.
+We've created an HTML form that uses the POST method to submit the form data to the server. We've also included the ```enctype="multipart/form-data"``` attribute, which is required when the form includes file uploads.
 
-Inside the form, we're using the Django template tag csrf_token to add a security token to the form. This is a required security measure in Django to prevent Cross-Site Request Forgery (CSRF) attacks.
+Inside the form, we're using the Django template tag `csrf_token` to add a security token to the form. This is a required security measure in Django to prevent Cross-Site Request Forgery (CSRF) attacks.
 
-To display the form fields, we're using the {{ form.as_p }} template tag, which will render the form fields as paragraphs (<p>) with labels and input fields. You could also use {{ form.as_table }} to render the fields in a table, or {{ form.as_ul }} to render them as an unordered list.
+To display the form fields, we're using the ```{{ form.as_p }}``` template tag, which will render the form fields as paragraphs (```<p>```) with labels and input fields. You could also use ```{{ form.as_table }}``` to render the fields in a table, or ```{{ form.as_ul }}``` to render them as an unordered list.
  
 
 **list.html:**
