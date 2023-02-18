@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+  <header>
+    <h1>My App</h1>
+    <nav>
+      <ul>
+        <!-- <li><a href="{% url 'index' %}">Home</a></li> -->
+        <li><a href="{% url 'create_asset' %}">Add Asset</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+  <footer>
+    &copy; My App {{ year }}
+  </footer>
+</body>
+</html>
