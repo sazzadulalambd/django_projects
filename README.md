@@ -1,8 +1,7 @@
 <img alt="PyPI - Python Version" src="https://img.shields.io/pypi/pyversions/Django?style=plastic">
 # django_projects
 1. Install Django by running the following command in your terminal:
-``` 
-pip install django ```
+``` pip install django ```
 
 2. Create a new Django project by running the following command in your terminal:
 ``` 
