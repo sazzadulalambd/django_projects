@@ -1,0 +1,6 @@
+npx create-react-app [NAME]  #fronend
+cd [NAME]  #fronend
+nmp start 
+
+
+nmp install uuid
