@@ -1,20 +1,21 @@
 
 from django.contrib import admin
 from django.urls import path, include
-from . import views 
+from . import views
 from rest_framework import routers
 
 router = routers.DefaultRouter()
-router.register(r'teams', views.TeamView,'team')
+router.register(r'teams', views.TeamView, 'team')
 
 urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),
     path('', views.index, name='index'),
-    path('login/',views.LoginAPI.as_view()),
-    path('register/',views.RegisterAPI.as_view()),
-    path('api/', include(router.urls), name = 'TeamView'),
+    path('login/', views.LoginAPI.as_view()),
+    path('register/', views.RegisterAPI.as_view()),
+    path('api/', include(router.urls), name='TeamView'),
     path('tasks/', views.task_list, name='task-list'),
     path('task/<int:pk>/', views.task_detail, name='task-detail'),
+    path('task/<int:pk>/pdf/', views.GeneratePdf.as_view(), name='GeneratePdf'),
 
 ]
 
