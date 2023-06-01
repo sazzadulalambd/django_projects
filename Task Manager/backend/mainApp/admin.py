@@ -13,5 +13,10 @@ class TaskViewAdmin(admin.ModelAdmin):
                     "completed", "created_at", "updated_at")
 
 
+class AccountViewAdmin(admin.ModelAdmin):
+    list_display = ("title",)
+
+
 admin.site.register(Team, TeamViewAdmin)
 admin.site.register(Task, TaskViewAdmin)
+admin.site.register(Account, AccountViewAdmin)

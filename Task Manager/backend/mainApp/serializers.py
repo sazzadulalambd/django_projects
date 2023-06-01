@@ -24,13 +24,24 @@ class RegisterSerializer(serializers.Serializer):
             username=validated_data['username'], email=validated_data['email'])
         user.set_password(validated_data['password'])
         user.save()
-        
+
         return super().create(validated_data)
 
 
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField()
     password = serializers.CharField()
+
+
+class AccountSerializer(serializers.HyperlinkedModelSerializer):
+
+    # teams = serializers.HyperlinkedRelatedField(
+    # many=True, read_only=True, view_name='TeamView')
+    # TODO
+
+    class Meta:
+        model = Account
+        fields = '__all__'
 
 
 class TeamSerializer(serializers.HyperlinkedModelSerializer):

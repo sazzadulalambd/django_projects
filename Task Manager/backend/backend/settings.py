@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -61,7 +62,7 @@ ROOT_URLCONF = 'backend.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ["TEMPLATES"],
+        'DIRS': [os.path.join(BASE_DIR, "TEMPLATES")],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -144,7 +145,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+# when deployemnt do collectstatic command and then in static file settings in web server(apache/nginx) mention alias as '/static' after it path of static_cdn folder or static folder as set by you
+STATIC_ROOT = os.path.join(BASE_DIR, 'static_cdn')
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+STATICFILES_DIRS = [
+    # mention folders in saticfiles_dirs where django has to look for static files except static folder inside apps during development
+    os.path.join(BASE_DIR, "static"),
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

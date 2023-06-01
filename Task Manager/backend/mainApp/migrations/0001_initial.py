@@ -15,22 +15,26 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Team',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=25)),
-                ('position', models.CharField(choices=[('ProjectManager', 'Project Manager'), ('TeamLead', 'Team Lead'), ('Devoper', 'Devoper'), ('Tester', 'Tester')], max_length=20)),
+                ('position', models.CharField(choices=[('ProjectManager', 'Project Manager'), (
+                    'TeamLead', 'Team Lead'), ('Devoper', 'Devoper'), ('Tester', 'Tester')], max_length=20)),
             ],
         ),
         migrations.CreateModel(
             name='Task',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
                 ('title', models.CharField(max_length=120)),
                 ('description', models.CharField(max_length=520)),
                 ('completed', models.BooleanField(default=False)),
                 ('pending', models.BooleanField(default=False)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('updated_at', models.DateTimeField(auto_now=True)),
-                ('assign', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, related_name='teams', to='mainApp.team')),
+                ('assign', models.ForeignKey(
+                    on_delete=django.db.models.deletion.DO_NOTHING, related_name='teams', to='mainApp.team')),
             ],
         ),
     ]

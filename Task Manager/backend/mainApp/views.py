@@ -8,7 +8,7 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from rest_framework import viewsets
 from .serializers import *
-from .models import Task, Team
+from .models import Task, Team, Account
 from django.contrib.auth import authenticate
 from rest_framework.authtoken.models import Token
 from rest_framework.authentication import TokenAuthentication
@@ -17,6 +17,7 @@ from django.core.paginator import Paginator
 from rest_framework.pagination import LimitOffsetPagination
 # for mail
 from django.core.mail import EmailMultiAlternatives, EmailMessage
+from django.conf import settings
 # for pdf
 from django.http import HttpResponse
 from django.template.loader import get_template
@@ -65,6 +66,18 @@ class RegisterAPI(APIView):
         serializer.save()
         return Response({'status': True, 'message': 'User created successful'}, status.HTTP_201_CREATED)
 
+# fro account
+
+
+@api_view(['GET'])
+def account(request):
+    if request.method == 'GET':
+        Account_p = Account.objects.all()
+        serializer = AccountSerializer(
+            Account_p, many=True, context={'request': request})
+        return Response(serializer.data)
+
+
 # for team
 
 
@@ -91,16 +104,18 @@ class TeamView(viewsets.ModelViewSet):
 # for task
 @api_view(['GET'])
 def index(request):
-    all_urls = {
-        'login  urls': 'http://127.0.0.1:8000/login/',
-        'signup urls': 'http://127.0.0.1:8000/register/',
-        'task   urls': 'http://127.0.0.1:8000/tasks/',
-        'teams  urls': 'http://127.0.0.1:8000/api/teams/',
+    # all_urls = {
+    #     'login   urls': 'http://127.0.0.1:8000/login/',
+    #     'signup  urls': 'http://127.0.0.1:8000/register/',
+    #     'task    urls': 'http://127.0.0.1:8000/tasks/',
+    #     'teams   urls': 'http://127.0.0.1:8000/api/teams/',
+    #     'account urls': 'http://127.0.0.1:8000/account/',
 
-    }
-    return Response(all_urls)
+    # }
+    # return Response(all_urls)
 
-#    return render(request, "Home/index.html")
+    # return render(request, "Home/index.html")
+    return render(request, "Task/task_pdf.html")
 
 
 @api_view(['GET', 'POST'])
@@ -134,10 +149,11 @@ def task_detail(request, pk):
 
     try:
         task = Task.objects.get(id=pk)   # task
+        acc = Account.objects.get()
     except task.DoesNotExist:            # task
         return Response({'message': 'This task is unable'}, status=status.HTTP_404_NOT_FOUND)
 
-    # make pdf
+    # make pdf start
 
     template = get_template('Task/task_pdf.html')
     data = {
@@ -149,25 +165,32 @@ def task_detail(request, pk):
         'pending':  task.pending,
         'created_at':  task.created_at,
         'updated_at':  str(task.updated_at),
+        'img': acc.image,
     }
+
+    # create pdf
     html = template.render(data)
     result = BytesIO()
     # , link_callback=fetch_resources)
     pdf = pisa.pisaDocument(BytesIO(html.encode("ISO-8859-1")), result)
     pdf = result.getvalue()
     filename = 'Task_' + data['title'] + '.pdf'
+    # make pdf start end
 
-    # Send mail
-    subject = 'This Task', pk
-    from_email = "noreply.ygbl@gmail.com"
-    to = "shawon.ygbl@gmail.com"
+    # Send mail start
+    subject = f'This Task {pk}'
+    from_email = settings.DEFAULT_FROM_EMAIL
+    to = 'shawon.ygbl@gmail.com'
+    # to = 'shawon.ygbl@gmail.com', 'sazzad.sua@gmail.com'
     text_content = "This is an important message."
-    html_content = "<p>This is an <strong>important task Primary key: {pk} </strong> message.</p>"
+    html_content = template.render(data)
+    # html_content = f"<p>This is an <strong>important task Primary key: {pk} </strong> message.</p>"
     msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
     msg.attach_alternative(html_content, "text/html")
-    msg.attach(filename, pdf, 'application/pdf')
-    msg.attach_file("F:/Tools/task/Task Manager/AIUB.jpg")
+    # msg.attach(filename, pdf, 'application/pdf')
+    # msg.attach_file("F:/Tools/task/Task Manager/AIUB.jpg")
     msg.send()
+    # Send mail end
 
     if request.method == 'GET':
 
@@ -217,19 +240,19 @@ class GeneratePdf(View):
             'updated_at':  str(task_db.updated_at),
         }
         pdf = render_to_pdf('Task/task_pdf.html', data)
-        # return HttpResponse(pdf, content_type='application/pdf')
+        return HttpResponse(pdf, content_type='application/pdf')
 
         # force download
-        if pdf:
-            response = HttpResponse(pdf, content_type='application/pdf')
-            filename = "task_%s.pdf" % (data['title'])
-            content = "inline; filename='%s'" % (filename)
-            # download = request.GET.get("download")
-            # if download:
-            content = "attachment; filename=%s" % (filename)
-            response['Content-Disposition'] = content
-            return response
-        return HttpResponse("Not found")
+        # if pdf:
+        #     response = HttpResponse(pdf, content_type='application/pdf')
+        #     filename = "task_%s.pdf" % (data['title'])
+        #     content = "inline; filename='%s'" % (filename)
+        #     # download = request.GET.get("download")
+        #     # if download:
+        #     content = "attachment; filename=%s" % (filename)
+        #     response['Content-Disposition'] = content
+        #     return response
+        # return HttpResponse("Not found")
 
 
 # old apis
