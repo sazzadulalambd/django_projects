@@ -1,3 +1,5 @@
+from django_tex.shortcuts import render_to_pdf
+from django_tex.core import compile_template_to_pdf
 from django.views import View
 from rest_framework import status
 from rest_framework.filters import SearchFilter, OrderingFilter  # search and ordering
@@ -212,7 +214,7 @@ def task_detail(request, pk):
 
 # make pdf
 
-def render_to_pdf(template_src, context_dict={}):
+def render_to_pdf_(template_src, context_dict={}):
     template = get_template(template_src)
     html = template.render(context_dict)
     result = BytesIO()
@@ -239,7 +241,7 @@ class GeneratePdf(View):
             'created_at':  task_db.created_at,
             'updated_at':  str(task_db.updated_at),
         }
-        pdf = render_to_pdf('Task/task_pdf.html', data)
+        pdf = render_to_pdf_('Task/task_pdf.html', data)
         return HttpResponse(pdf, content_type='application/pdf')
 
         # force download
@@ -254,6 +256,32 @@ class GeneratePdf(View):
         #     return response
         # return HttpResponse("Not found")
 
+
+class TexPdf(View):
+    def get(self, request, *args, **kwargs):
+        template_name = 'test.tex'
+        context = {'foo': 'Bar', }
+        return render_to_pdf(request, template_name, context, filename='test.pdf')
+
+
+def map_view(request):
+    return render(request, 'Task/map.html')
+
+
+def Single_map_view(request):
+    return render(request, 'Task/single_map.html')
+
+
+def Test_map_view(request):
+    return render(request, 'Task/test_map.html')
+
+
+def university_location(request):
+    context = {
+        'university_lat': 38.7749,  # Latitude of the university location
+        'university_lng': -122.4194,  # Longitude of the university location
+    }
+    return render(request, 'Task/test_map.html', context)
 
 # old apis
 
