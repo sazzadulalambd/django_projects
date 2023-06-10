@@ -180,16 +180,24 @@ def task_detail(request, pk):
     # make pdf start end
 
     # Send mail start
+
     subject = f'This Task {pk}'
     from_email = settings.DEFAULT_FROM_EMAIL
     to = 'shawon.ygbl@gmail.com'
     # to = 'shawon.ygbl@gmail.com', 'sazzad.sua@gmail.com'
     text_content = "This is an important message."
-    html_content = template.render(data)
+    # html_content = template.render(data)
+
+    # send cv
+    template_name = 'test.tex'
+    context_data = {'fullName': 'Sazzadul Alam Shawon', }
+    cv_pdf = compile_template_to_pdf(template_name, context_data)
+
     # html_content = f"<p>This is an <strong>important task Primary key: {pk} </strong> message.</p>"
     msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
-    msg.attach_alternative(html_content, "text/html")
-    # msg.attach(filename, pdf, 'application/pdf')
+    # msg.attach_alternative(html_content, "text/html")
+    msg.attach(filename, pdf, 'application/pdf')
+    msg.attach("cv.pdf", cv_pdf, 'application/pdf')
     # msg.attach_file("F:/Tools/task/Task Manager/AIUB.jpg")
     msg.send()
     # Send mail end
@@ -259,9 +267,26 @@ class GeneratePdf(View):
 
 class TexPdf(View):
     def get(self, request, *args, **kwargs):
+        # template_name = 'test.tex'
+        # context_data = {'fullName': 'Sazzadul Alam Shawon', }
+        # pdf = render_to_pdf(request, template_name,
+        #                     context_data, filename='cv_test.pdf')
+
+        subject = f'This Task'
+        from_email = settings.DEFAULT_FROM_EMAIL
+        to = 'shawon.ygbl@gmail.com'
+        text_content = "This is an important message."
+
+        # send cv
         template_name = 'test.tex'
-        context = {'foo': 'Bar', }
-        return render_to_pdf(request, template_name, context, filename='test.pdf')
+        context_data = {'fullName': 'Sazzadul Alam Shawon', }
+        cv_pdf = compile_template_to_pdf(template_name, context_data)
+
+        msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
+        msg.attach("cv.pdf", cv_pdf)
+        msg.send()
+        # Send mail end
+        return HttpResponse(cv_pdf, content_type='application/pdf')
 
 
 def map_view(request):
