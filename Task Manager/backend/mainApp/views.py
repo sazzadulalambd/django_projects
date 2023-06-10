@@ -290,21 +290,26 @@ class TexPdf(View):
 
 
 def map_view(request):
-    return render(request, 'Task/map.html')
+
+    locations = [
+        {'name': "Location 1", 'lat': 51.505, 'lng': -0.09},
+        {'name': "Location 2", 'lat': 51.51, 'lng': -0.1},
+        {'name': "Location 3", 'lat': 51.52, 'lng': -0.12},
+    ]
+
+    context = {'locations': locations}
+    return render(request, 'Task/map.html', context)
 
 
 def Single_map_view(request):
     return render(request, 'Task/single_map.html')
 
 
-def Test_map_view(request):
-    return render(request, 'Task/test_map.html')
-
-
 def university_location(request):
     context = {
         'university_lat': 38.7749,  # Latitude of the university location
         'university_lng': -122.4194,  # Longitude of the university location
+        'name': "American International University Bangladesh"
     }
     return render(request, 'Task/test_map.html', context)
 

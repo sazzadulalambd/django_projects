@@ -23,7 +23,6 @@ urlpatterns = [
     path('pdf/', views.TexPdf.as_view(), name='TexPdf'),
     path('map/', views.map_view, name='map'),
     path('smap/', views.Single_map_view, name='s-map'),
-    path('tmap/', views.Test_map_view, name='t-map'),
     path('loc/', views.university_location, name='university_location'),
 
 

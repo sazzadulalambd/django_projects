@@ -1,38 +1,9 @@
-{% load static %}
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="shortcut icon"
-      href="{% static 'assets/media/logos/favicon.ico' %}"
-    />
-    <!--begin::Fonts-->
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700"
-    />
-    <!--end::Fonts-->
-    <!--begin::Page Vendor Stylesheets(used by this page)-->
-    <link
-      href="{% static 'assets/plugins/custom/fullcalendar/fullcalendar.bundle.css"
-      rel="stylesheet"
-      type="text/css' %}"
-    />
-    <!--end::Page Vendor Stylesheets-->
-    <!--begin::Global Stylesheets Bundle(used by all pages)-->
-    <link
-      href="{% static 'assets/plugins/global/plugins.bundle.css"
-      rel="stylesheet"
-      type="text/css' %}"
-    />
-    <link
-      href="{% static 'assets/css/style.bundle.css"
-      rel="stylesheet"
-      type="text/css' %}"
-    />
-    <!--end::Global Stylesheets Bundle-->
     <link
       rel="stylesheet"
       href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -54,100 +25,75 @@
     </style>
   </head>
   <body>
-    <div id="kt_leaflet_6" style="height: 300px"></div>
+    <div id="map"></div>
 
     <script>
-      // Class definition
-      var KTLeaflet = (function () {
-        // Private functions
-        var demo6 = function () {
-          // add sample location data
-          var data = [
-            { loc: [41.57533, 13.102411], title: "aquamarine" },
-            { loc: [41.57573, 13.002411], title: "black" },
-            { loc: [41.807149, 13.162994], title: "blue" },
-            { loc: [41.507149, 13.172994], title: "chocolate" },
-            { loc: [41.847149, 14.132994], title: "coral" },
-            { loc: [41.21919, 13.062145], title: "cyan" },
-            { loc: [41.34419, 13.242145], title: "darkblue" },
-            { loc: [41.67919, 13.122145], title: "Darkred" },
-            { loc: [41.32919, 13.192145], title: "Darkgray" },
-            { loc: [41.37929, 13.122545], title: "dodgerblue" },
-            { loc: [41.40919, 13.362145], title: "gray" },
-            { loc: [41.794008, 12.583884], title: "green" },
-            { loc: [41.805008, 12.982884], title: "greenyellow" },
-            { loc: [41.536175, 13.27359], title: "red" },
-            { loc: [41.516175, 13.37359], title: "rosybrown" },
-            { loc: [41.507175, 13.27369], title: "royalblue" },
-            { loc: [41.836175, 13.67359], title: "salmon" },
-            { loc: [41.796175, 13.57059], title: "seagreen" },
-            { loc: [41.436175, 13.57359], title: "seashell" },
-            { loc: [41.336175, 13.97359], title: "silver" },
-            { loc: [41.236175, 13.27359], title: "skyblue" },
-            { loc: [41.546175, 13.47359], title: "yellow" },
-            { loc: [41.23929, 13.032145], title: "white" },
-          ];
+      const map = L.map("map");
+      // Initializes map
 
-          // init leaflet map
-          var leaflet = new L.Map("kt_leaflet_6", {
-            zoom: 10,
-            center: new L.latLng(data[0].loc),
-          });
+      map.setView([51.505, -0.09], 13);
+      // Sets initial coordinates and zoom level
 
-          leaflet.addLayer(
-            new L.TileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png")
-          );
+      const streetsLayer = L.tileLayer(
+        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+        {
+          maxZoom: 19,
+          attribution: "© OpenStreetMap Streets",
+        }
+      );
 
-          // add scale layer
-          L.control.scale().addTo(leaflet);
+      const satelliteLayer = L.tileLayer(
+        "http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}",
+        {
+          maxZoom: 19,
+          subdomains: ["mt0", "mt1", "mt2", "mt3"],
+          attribution: "© Google Satellite",
+        }
+      );
 
-          // set custom SVG icon marker
-          var leafletIcon = L.divIcon({
-            html: `<span class="svg-icon svg-icon-danger svg-icon-3x"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="24" width="24" height="0"/><path d="M5,10.5 C5,6 8,3 12.5,3 C17,3 20,6.75 20,10.5 C20,12.8325623 17.8236613,16.03566 13.470984,20.1092932 C12.9154018,20.6292577 12.0585054,20.6508331 11.4774555,20.1594925 C7.15915182,16.5078313 5,13.2880005 5,10.5 Z M12.5,12 C13.8807119,12 15,10.8807119 15,9.5 C15,8.11928813 13.8807119,7 12.5,7 C11.1192881,7 10,8.11928813 10,9.5 C10,10.8807119 11.1192881,12 12.5,12 Z" fill="#000000" fill-rule="nonzero"/></g></svg></span>`,
-            bgPos: [10, 10],
-            iconAnchor: [20, 37],
-            popupAnchor: [0, -37],
-            className: "leaflet-marker",
-          });
+      const openStreetMapLayer = L.tileLayer(
+        "https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png",
+        {
+          maxZoom: 19,
+          attribution: "© OpenStreetMap Hot",
+        }
+      );
 
-          // set markers
-          data.forEach(function (item) {
-            var marker = L.marker(item.loc, { icon: leafletIcon }).addTo(
-              leaflet
-            );
-            marker.bindPopup(item.title, { closeButton: false });
-          });
-        };
+      // Create an object with layer options
+      const baseLayers = {
+        Streets: streetsLayer,
+        Satellite: satelliteLayer,
+        OpenStreetMap: openStreetMapLayer,
+      };
 
-        return {
-          // public functions
-          init: function () {
-            // default charts
-            demo6();
-          },
-        };
-      })();
+      // Add default Streets layer to the map
+      streetsLayer.addTo(map);
 
-      jQuery(document).ready(function () {
-        KTLeaflet.init();
+      // Add layer control to the map
+      L.control.layers(baseLayers).addTo(map);
+
+      {% comment %} const locations = [
+        { name: "Location 1", lat: 51.505, lng: -0.09 },
+        { name: "Location 2", lat: 51.51, lng: -0.1 },
+        { name: "Location 3", lat: 51.52, lng: -0.12 },
+        // Add more locations as needed
+      ]; {% endcomment %}
+
+      const locations = {{ locations | safe }};
+
+      // Create an empty layer group for markers
+      const markerGroup = L.layerGroup().addTo(map);
+
+      // Loop through the locations array and create markers for each location
+      locations.forEach((location) => {
+        const marker = L.marker([location.lat, location.lng]).addTo(
+          markerGroup
+        );
+        marker.bindPopup(location.name);
       });
-    </script>
 
-    <script>
-      var hostUrl = "{% static 'assets/' %}";
+      // Fit the map bounds to include all markers
+      map.fitBounds(markerGroup.getBounds());
     </script>
-    <!--begin::Javascript-->
-    <!--begin::Global Javascript Bundle(used by all pages)-->
-    <script src="{% static 'assets/plugins/global/plugins.bundle.js' %}"></script>
-    <script src="{% static 'assets/js/scripts.bundle.js' %}"></script>
-    <!--end::Global Javascript Bundle-->
-    <!--begin::Page Vendors Javascript(used by this page)-->
-    <script src="{% static 'assets/plugins/custom/fullcalendar/fullcalendar.bundle.js' %}"></script>
-    <!--end::Page Vendors Javascript-->
-    <!--begin::Page Custom Javascript(used by this page)-->
-    <script src="{% static 'assets/js/custom/widgets.js' %}"></script>
-    <script src="{% static 'assets/js/custom/apps/chat/chat.js' %}"></script>
-    <script src="{% static 'assets/js/custom/modals/create-app.js' %}"></script>
-    <script src="{% static 'assets/js/custom/modals/upgrade-plan.js' %}"></script>
   </body>
 </html>

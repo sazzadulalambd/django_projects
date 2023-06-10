@@ -28,17 +28,41 @@
     <div id="map"></div>
 
     <script>
-      const map = L.map("map");
+      const map = L.map('map');
       // Initializes map
 
       map.setView([51.505, -0.09], 13);
       // Sets initial coordinates and zoom level
 
-      L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      const streetsLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
-        attribution: "© OpenStreetMap",
-      }).addTo(map);
-      // Sets map data source and associates with map
+        attribution: '© OpenStreetMap Streets'
+      });
+
+      const satelliteLayer = L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}', {
+        maxZoom: 19,
+        subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
+        attribution: '© Google Satellite'
+      });
+
+      const openStreetMapLayer = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '© OpenStreetMap Hot'
+      });
+
+      // Create an object with layer options
+      const baseLayers = {
+        'OpenStreetMap': openStreetMapLayer,
+        'Streets': streetsLayer,
+        'Satellite': satelliteLayer
+      };
+
+      // Add default Streets layer to the map
+      streetsLayer.addTo(map);
+
+      // Add layer control to the map
+      L.control.layers(baseLayers).addTo(map);
+
 
       let marker, circle, zoomed;
 
@@ -63,6 +87,7 @@
 
         marker = L.marker([lat, lng]).addTo(map);
         circle = L.circle([lat, lng], { radius: accuracy }).addTo(map);
+        marker.bindPopup( "{{ name }}" );
         // Adds marker to the map and a circle for accuracy
 
         //console.log("+++++++++++++++++++++++++", marker);
@@ -89,3 +114,14 @@
     </script>
   </body>
 </html>
+
+{% comment %} const map = L.map("map"); // Initializes map map.setView([51.505,
+-0.09], 13); // Sets initial coordinates and zoom level
+L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 19,
+attribution: "© OpenStreetMap", }).addTo(map);
+L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}', { maxZoom:
+19, subdomains: ['mt0', 'mt1', 'mt2', 'mt3'], attribution: '© Google Satellite'
+}).addTo(map);
+L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', { maxZoom:
+19, attribution: '© OpenStreetMap Hot' }).addTo(map); // Sets map data source
+and associates with map {% endcomment %}
