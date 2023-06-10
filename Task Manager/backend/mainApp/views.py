@@ -292,9 +292,9 @@ class TexPdf(View):
 def map_view(request):
 
     locations = [
-        {'name': "Location 1", 'lat': 51.505, 'lng': -0.09},
-        {'name': "Location 2", 'lat': 51.51, 'lng': -0.1},
-        {'name': "Location 3", 'lat': 51.52, 'lng': -0.12},
+        {'name': "NBR", 'lat': 24.01045645233203, 'lng': 90.31868209759317},
+        {'name': "Metro School", 'lat': 24.010453129775186, 'lng': 90.31827273411703},
+        {'name': "mosjid", 'lat': 24.01037300297231, 'lng': 90.31849282353765},
     ]
 
     context = {'locations': locations}
