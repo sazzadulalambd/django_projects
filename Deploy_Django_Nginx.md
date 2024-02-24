@@ -23,7 +23,7 @@
   ```
   - Create requirements.txt File
   ```sh
-    pip freeze > requirements.txt
+    pip3 freeze > requirements.txt
   ```
   - Deactivate Virtual Env
 - Get Access to Remote Server via SSH
@@ -47,19 +47,19 @@ git --version
 - Install Software (If required)
 
 ```sh
-sudo apt install nginx
-sudo apt install python
-sudo apt install python3-pip
-sudo apt install git
+sudo dnf install nginx
+sudo dnf install python
+sudo dnf install python3-pip
+sudo dnf install git
 ```
 
 - Install virtualenv
 
 ```sh
-pip list
-sudo pip install virtualenv
+pip3 list
+sudo pip3 install virtualenv
 OR
-sudo apt install python3-virtualenv
+sudo dnf install python3-virtualenv
 ```
 
 - Verify Nginx is Active and Running
@@ -111,6 +111,16 @@ exit
      Syntax:- unzip zip_file_name
      Example:- unzip versity_info.zip
      ```
+     - Github push
+     ```sh
+      echo "# studygiveaway" >> README.md
+      git init
+      git add README.md
+      git commit -m "first commit"
+      git branch -M main
+      git remote add origin https://github.com/Young-Genius-Bangladesh-Limited/studygiveaway.git
+      git push -uf origin main
+     ```
   2. Using Github
      - Open Project on VS Code then Create a .gitignore File (If needed)
      - Push your Poject to Your Github Account as Private Repo
@@ -135,12 +145,14 @@ exit
      - Clone Project from your github Repo using SSH Path It requires to setup SSH Key on Github
      ```sh
      Syntax:- git clone ssh_repo_path
-     Example:- git clone git@github.com:geekyshow1/miniblog.git
+     Example:- git clone git@github.com:Young-Genius-Bangladesh-Limited/studygiveaway.git
      ```
 - Create Virtual env
 
 ```sh
-cd ~/project_folder_name
+syntax:- cd ~/project_folder_name
+Example:- cd ~/versity_info
+
 Syntax:- virtualenv env_name
 Example:- virtualenv .venv
 ```
@@ -161,7 +173,7 @@ pip3 install -r requirements.txt
 - Install Gunicorn
 
 ```sh
-pip install gunicorn
+pip3 install gunicorn
 ```
 
 - Deactivate Virtualenv
@@ -173,8 +185,8 @@ deactivate
 - Create System Socket File for Gunicorn
 
 ```sh
-Syntax:- sudo nano /etc/systemd/system/your_domain.gunicorn.socket
-Example:- sudo nano /etc/systemd/system/studygiveway.com.gunicorn.socket
+Syntax:- sudo vim /etc/systemd/system/your_domain.gunicorn.socket
+Example:- sudo vim /etc/systemd/system/studygiveway.com.gunicorn.socket
 ```
 
 - Write below code inside sonamkumari.com.gunicorn.socket File
@@ -204,8 +216,8 @@ WantedBy=sockets.target
 - Create System Service File for Gunicorn
 
 ```sh
-Syntax:- sudo nano /etc/systemd/system/your_domain.gunicorn.service
-Example:- sudo nano /etc/systemd/system/studygiveway.com.gunicorn.service
+Syntax:- sudo vim /etc/systemd/system/your_domain.gunicorn.service
+Example:- sudo vim /etc/systemd/system/studygiveway.com.gunicorn.service
 ```
 
 - Write below code inside sonamkumari.com.gunicorn.service File
@@ -287,8 +299,8 @@ sudo systemctl restart studygiveway.com.gunicorn
 - Create Virtual Host File
 
 ```sh
-Syntax:- sudo nano /etc/nginx/sites-available/your_domain
-Example:- sudo nano /etc/nginx/sites-available/studygiveway.com
+Syntax:- sudo vim /etc/nginx/sites-available/your_domain
+Example:- sudo vim /etc/nginx/sites-available/studygiveway.com
 ```
 
 - Write following Code in Virtual Host File
@@ -312,11 +324,11 @@ server{
     }
 
     location  /static/ {
-        root /var/www/versity_info;
+        root /var/www/project_folder_name;
     }
 
     location  /media/ {
-        root /var/www/versity_info;
+        root /var/www/project_folder_name;
     }
 }
 
@@ -371,8 +383,9 @@ sudo service nginx restart
   - Open Django Project settings.py
 
   ```sh
-  cd ~/project_folder_name/inner_project_folder_name
-  nano settings.py
+  Syntax:- cd ~/project_folder_name/inner_project_folder_name
+  Example:-  cd src/versity_info/settings
+  vim development.py
   ```
 
   - Make below changes
@@ -381,7 +394,7 @@ sudo service nginx restart
   ALLOWED_HOST = ["your_domain"]
 
   Example:-
-  ALLOWED_HOST = ["studygiveway.com", "www.studygiveway.com"]
+  ALLOWED_HOST = ["*","127.0.0.1","155.133.26.105","studygiveway.com", "www.studygiveway.com"]
   ```
 
   - Restart Gunicorn (You need to restart everytime you make change in your project code)
@@ -419,8 +432,9 @@ Example:- sudo mv media/* /var/www/versity_info/media/
 - Open Django Project settings.py
 
 ```sh
-cd ~/project_folder_name/inner_project_folder_name
-nano settings.py
+  Syntax:- cd ~/project_folder_name/inner_project_folder_name
+  Example:-  cd src/versity_info/settings
+  vim development.py
 ```
 
 - Make below changes
