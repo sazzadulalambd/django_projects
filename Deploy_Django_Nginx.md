@@ -155,7 +155,7 @@ Example:- source .venv/bin/activate
 - Install Dependencies
 
 ```sh
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 ```
 
 - Install Gunicorn
