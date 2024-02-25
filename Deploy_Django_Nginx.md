@@ -153,15 +153,15 @@ exit
 syntax:- cd ~/project_folder_name
 Example:- cd ~/versity_info
 
-Syntax:- virtualenv env_name
-Example:- virtualenv .venv
+Syntax:- python3 -m venv env_name
+Example:- python3 -3 venv ygblvenv
 ```
 
 - Activate Virtual env
 
 ```sh
 Syntax:- source virtualenv_name/bin/activate
-Example:- source .venv/bin/activate
+Example:- source ygblvenv/bin/activate
 ```
 
 - Install Dependencies
