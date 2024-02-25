@@ -256,7 +256,7 @@ ExecStart=/home/ygbl/gunicorn \
           --access-logfile - \
           --workers 3 \
           --bind unix:/run/studygiveway.com.gunicorn.sock \
-          miniblog.wsgi:application
+          src.wsgi:application
 
 [Install]
 WantedBy=multi-user.target
