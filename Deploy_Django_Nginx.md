@@ -252,7 +252,7 @@ After=network.target
 User=ygbl
 Group=ygbl
 WorkingDirectory=/home/ygbl/versity_info
-ExecStart=/home/ygbl/gunicorn \
+ExecStart=/home/ygbl/.local/lib/python3.11/site-packages/gunicorn \
           --access-logfile - \
           --workers 3 \
           --bind unix:/run/studygiveway.com.gunicorn.sock \
