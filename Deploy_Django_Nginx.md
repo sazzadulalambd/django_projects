@@ -251,12 +251,12 @@ After=network.target
 [Service]
 User=ygbl
 Group=ygbl
-WorkingDirectory=/home/ygbl/versity_info
+WorkingDirectory=/home/ygbl/versity_info/src
 ExecStart=/home/ygbl/.local/lib/python3.11/site-packages/gunicorn \
           --access-logfile - \
           --workers 3 \
           --bind unix:/run/studygiveway.com.gunicorn.sock \
-          src.wsgi:application
+          versity_info.wsgi:application
 
 [Install]
 WantedBy=multi-user.target
