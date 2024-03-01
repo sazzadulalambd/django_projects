@@ -112,6 +112,8 @@
     screen -S "run"
     python manage.py runserver 0.0.0.0:9000
     ctrl + A + D
+
+    [detached from 283103.run]
     ```
     
 15. Your site is now live on [http://155.133.26.105:9000](http://155.133.26.105:9000). 
@@ -119,7 +121,7 @@
 16. You can reattach to the screen session later if needed:
 
     ```bash
-    screen -r "run"
+    screen -r 283103.run
     ```
 
 Remember to replace placeholders like `/path/to/your/local/project` with your actual local project path. Let me know if you have any questions or need further clarification!
