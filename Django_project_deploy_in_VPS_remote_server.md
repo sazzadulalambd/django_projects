@@ -114,7 +114,9 @@
     ctrl + A + D
     ```
     
-15. Your site is now live on [http://155.133.26.105:9000](http://155.133.26.105:9000). You can reattach to the screen session later if needed:
+15. Your site is now live on [http://155.133.26.105:9000](http://155.133.26.105:9000). 
+
+16. You can reattach to the screen session later if needed:
 
     ```bash
     screen -r "run"
